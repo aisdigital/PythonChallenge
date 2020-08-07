@@ -61,3 +61,13 @@ Example:
 * All the code except for the `main.py` should be on the `src` directory.
 
 Happy Coding!
+
+## Instructions
+
+To execute tests run:
+  `python3 -m unittest tests/unit_test.py`
+
+### Cases
+  `python3 main.py --find-par-id 0028S00066000000`
+  `python3 main.py --find-par-id 0028S00066000000 --output .`
+  `python3 main.py --filter-school-desc Pittsburgh`
