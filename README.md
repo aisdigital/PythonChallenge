@@ -29,6 +29,9 @@ To run the project use basic python command
 
 *  `python -m main`
 
+To run the project tests use:
+* `python -m unittest tests/data_test.py`
+
 After set it all up, let's go to the challenge \o/
 
 ## Challenge 
@@ -36,7 +39,7 @@ After set it all up, let's go to the challenge \o/
 Given a csv input file `./input/property_sales_transactions.csv` what you have to do is:
 
 Create a command line application where you will:
-* Read the CSV file and store the data in memory(data don't need to be ordered). The application will do actions based on the arguments provided. 
+* Read the CSV file and store the data in memory ( data don't need to be ordered ). The application will do actions based on the arguments provided. 
 
 1. Search by SCHOOLDESC: `python -m main --filter-school-desc abc` will seach by all the entries that contains and show the PAIRID and `SCHOOLDESC` of each one.
 
@@ -57,7 +60,7 @@ Example:
 
 * Please provide unit tests for all you think is necessary to be tested. 
 
-* The tests should be on a directory called `tests` and you should edit the this file [Instructions](Instructions) section to describe how to run them.
+* The tests should be on a directory called `tests` and you should edit this file [Instructions](##Instructions) section to describe how to run them.
 * All the code except for the `main.py` should be on the `src` directory.
 
 Happy Coding!
