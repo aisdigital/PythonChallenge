@@ -22,16 +22,15 @@ def getdata(filename):
             yield row
 
 
-def getscholl(filename,schooldesc):
+def getschool(filename,schooldesc):
     """
     Get Data from CSV file
     """
     with open(filename) as csvfile:
         datareader = csv.DictReader(csvfile)
-        count = 0
         for row in datareader:
             if schooldesc in row["SCHOOLDESC"]:
-                yield {row["PARID"],row["SCHOOLDESC"]}
+                yield {"PARID":row["PARID"],"SCHOOLDESC":row["SCHOOLDESC"]}
 
 
 def getentry(filename,pairid):
@@ -60,7 +59,7 @@ def getsalesummary(filename):
             else:
                 saleSummary[row["SALEDESC"]] = 1
 
-    yield saleSummary
+    return saleSummary
 
 
 def writeReport(filedir,text):
@@ -72,25 +71,30 @@ def main(argv):
     Main Function - Read Argments and Display help msg
     """
 
-    help_msg = """
-    Use: python -m main.py [OPTION] [ARGUMENT]
-    OPTIONS:
-    \t-s,--find-pair-school-desk\t\tSearch entry by scholl id
-    \t-i,--find-pair-id\t\tSearch entry by scholl id
-    \t-o,--output\t\tSearch entry by scholl id
-    \t-c,--sale-summary\t\tCount how many sales per SALEDESK
-    """
+    # Create input arguments using argparse
+    parser = argparse.ArgumentParser(prog="AIS Python Challenge")
+    parser.add_argument("-s","--find-pair-school-desc",dest='schooldesc',action='store',
+                        help="Search entries BY SCHOOLDESC")
+    parser.add_argument("-i","--find-pair-id",dest='pairid',action='store',
+                        help="Seach entry by PAIRID")
+    parser.add_argument("-o","--output",action='store_true',
+                        help="Define Output directory")
+    parser.add_argument("-c","--sales-summary",dest='salessumary',action='store_true',
+                        help="Count how many per SALEDESC")
 
-    #isFileReport = False
+    # Evaluate Input arguments
+    args = parser.parse_args()
 
-    #print(help_msg)
-    #getdata("input/property_sales_transactions.csv")
-
-    #for i in getentry("input/property_sales_transactions.csv","9929X85746000000"):
-    #    print(i)
-
-    for i in getsalesummary("input/property_sales_transactions.csv"):
-        print(i)
+    # Select Option and Perfom Required Filter
+    if args.pairid:
+        for i in getentry("input/property_sales_transactions.csv", args.pairid):
+            print(i)
+    elif args.schooldesc:
+        for i in getschool("input/property_sales_transactions.csv", args.schooldesc):
+            print(i)
+    elif args.salessumary:
+        for i in getsalesummary("input/property_sales_transactions.csv"):
+            print(i)
 
     #if isFileReport:
     #    print(reportText)
@@ -98,4 +102,4 @@ def main(argv):
     #    writeReport(filedir,reportText)
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+        main(sys.argv[1:])

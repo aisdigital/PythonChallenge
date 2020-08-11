@@ -4,6 +4,7 @@
 # @author Akafael
 # @version 1.1
 #
+# ref: 
 ##
 
 ###############################################################################
@@ -34,7 +35,7 @@ LOCALVIRTUALENV_DIR := ${MAKEFILE_DIR}/tools/py${PYVERSION}
 .PHONY: help
 help:
 	@echo "Use: make -f Makefile [OPTION]"
-	@echo "\nOPTIONS"
+	@echo "OPTIONS"
 	@sed Makefile -n -e "N;s/^# \(.*\)\n.PHONY:\(.*\)/ \2:\1/p;D" | column -ts:
 	@echo ""
 
