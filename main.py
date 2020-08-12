@@ -1,7 +1,6 @@
 import sys
-import os
-import datetime
 import src.reader as reader
+import src.writer as writer
 from src.arguments import Arguments
 
 
@@ -20,15 +19,7 @@ def main(argv):
         result = reader.get_summary()
 
     if args.write_output_to_file:
-        date = datetime.datetime.now().isoformat()
-        path = f'./{args.output_path}'
-        
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        with open(f'{path}/results-{date}.txt', mode='w') as out:
-            out.write(result)
-
+        writer.wirte_to_file(args.output_path, result)
     else:
         print(result)
 

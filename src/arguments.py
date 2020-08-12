@@ -27,7 +27,7 @@ class Arguments():
                                action='store_true',
                                help='Show summary of how many sales for each SALEDESC')
 
-        args = parser.parse_args()
+        args = parser.parse_args(argv)
 
         self.filter_by_school_desc = args.school_desc is not None
         self.school_desc = args.school_desc
