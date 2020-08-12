@@ -4,7 +4,6 @@
 # @author Akafael
 # @version 1.1
 #
-# ref: 
 ##
 
 ###############################################################################
@@ -27,6 +26,11 @@ INSTALLVIRTUALENV_DIR := ${MAKEFILE_DIR}/tmp/virtualenv-${VIRTUALENVVERSION}
 LOCALPYTHON_DIR := ${MAKEFILE_DIR}/tools/python-${PYVERSION}
 LOCALVIRTUALENV_DIR := ${MAKEFILE_DIR}/tools/py${PYVERSION}
 
+# Python Source Files
+SRC_DIR = $(MAKEFILE_DIR)
+PYSRC = $(wildcard $(SRC_DIR)/*.py)
+PYOBJ = $(PYSRC:.py=.pyc)
+
 ###############################################################################
 # Rules
 ###############################################################################
@@ -40,6 +44,10 @@ help:
 	@echo ""
 
 # Enviroment Phony Rules ------------------------------------------------------
+
+# Compile All codes
+.PHONY: compile
+compile: ${PYOBJ}
 
 # Download Tools and Create Local Enviroment
 .PHONY: env
@@ -109,5 +117,13 @@ ${LOCALVIRTUALENV_DIR}: ${LOCALPYTHON_DIR} ${INSTALLVIRTUALENV_DIR}
 	mkdir -p ${LOCALVIRTUALENV_DIR}/.. &&\
 	cd ${LOCALVIRTUALENV_DIR}/.. &&\
 	${LOCALPYTHON_DIR}/bin/virtualenv py${PYVERSION} --python=${LOCALPYTHON_DIR}/bin/python3
+
+##
+# Pattern rule for python code check
+# - Using Installed Python
+##
+$(SRC_DIR)/%.pyc: $(SRC_DIR)/%.py
+	. ${LOCALVIRTUALENV_DIR}/bin/activate &&\
+	python -m py_compile $<
 
 

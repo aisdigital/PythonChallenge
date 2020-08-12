@@ -7,6 +7,7 @@ import sys
 import csv
 import json
 import argparse
+import datetime
 
 #PARID,PROPERTYHOUSENUM,PROPERTYFRACTION,PROPERTYADDRESSDIR,PROPERTYADDRESSSTREET,PROPERTYADDRESSSUF,PROPERTYADDRESSUNITDESC,PROPERTYUNITNO,PROPERTYCITY,PROPERTYSTATE,PROPERTYZIP,SCHOOLCODE,SCHOOLDESC,MUNICODE,MUNIDESC,RECORDDATE,SALEDATE,PRICE,DEEDBOOK,DEEDPAGE,SALECODE,SALEDESC,INSTRTYP,INSTRTYPDESC
 
@@ -17,7 +18,6 @@ def getdata(filename):
     """
     with open(filename) as csvfile:
         datareader = csv.DictReader(csvfile)
-        count = 0
         for row in datareader:
             yield row
 
@@ -35,11 +35,10 @@ def getschool(filename,schooldesc):
 
 def getentry(filename,pairid):
     """
-    Get Data from CSV file
+    Get Entry by PAIRID
     """
     with open(filename) as csvfile:
         datareader = csv.DictReader(csvfile)
-        count = 0
         for row in datareader:
             if row["PARID"] == pairid:
                 yield row
@@ -47,12 +46,11 @@ def getentry(filename,pairid):
 
 def getsalesummary(filename):
     """
-    Get Data from CSV file
+    Generate Sales Report
     """
     saleSummary = {}
     with open(filename) as csvfile:
         datareader = csv.DictReader(csvfile)
-        count = 0
         for row in datareader:
             if row["SALEDESC"] in saleSummary:
                 saleSummary[row["SALEDESC"]] += 1
@@ -63,8 +61,18 @@ def getsalesummary(filename):
 
 
 def writeReport(filedir,text):
+    """
+    Write file report
+    """
     # Generate filename
-    filename = filedir+"/"+"results-"+"timestamp"+".txt"
+    timestamp = datetime.datetime.now().replace(microsecond=0).isoformat().replace(":","")
+    filename = filedir+"/"+"results-"+timestamp+".txt"
+
+    # Write File
+    reportFile = open(filename,"w")
+    reportFile.write(text + '\n')
+    reportFile.close()
+
 
 def main(argv):
     """
@@ -77,7 +85,7 @@ def main(argv):
                         help="Search entries BY SCHOOLDESC")
     parser.add_argument("-i","--find-pair-id",dest='pairid',action='store',
                         help="Seach entry by PAIRID")
-    parser.add_argument("-o","--output",action='store_true',
+    parser.add_argument("-o","--output",action='store',
                         help="Define Output directory")
     parser.add_argument("-c","--sales-summary",dest='salessumary',action='store_true',
                         help="Count how many per SALEDESC")
@@ -86,20 +94,20 @@ def main(argv):
     args = parser.parse_args()
 
     # Select Option and Perfom Required Filter
+    inputFileName = "input/property_sales_transactions.csv"
+    reportText = ""
     if args.pairid:
-        for i in getentry("input/property_sales_transactions.csv", args.pairid):
-            print(i)
+        reportText = getentry(inputFileName, args.pairid)
     elif args.schooldesc:
-        for i in getschool("input/property_sales_transactions.csv", args.schooldesc):
-            print(i)
+        reportText = getschool(inputFileName, args.schooldesc)
     elif args.salessumary:
-        for i in getsalesummary("input/property_sales_transactions.csv"):
-            print(i)
+        reportText = getsalesummary(inputFileName)
 
-    #if isFileReport:
-    #    print(reportText)
-    #else
-    #    writeReport(filedir,reportText)
+    # Select Output and Generate Report
+    if args.output:
+        writeReport(args.output,str(reportText))
+    else:
+        print(reportText)
 
 if __name__ == '__main__':
         main(sys.argv[1:])
