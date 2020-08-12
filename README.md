@@ -29,7 +29,21 @@ To run the project use basic python command
 
 *  `python -m main`
 
-After set it all up, let's go to the challenge \o/
+To filter the transactions by school desc use the command:
+
+*  `python -m main --filter-school-desc SCHOOLDESC`
+
+To seach by PARID use the command:
+
+*  `python -m main --find-pair-id PARID`
+
+To view the sale summary use the command:
+
+*  `python -m main --sale-summary`
+
+To run the tests use the command
+
+*  `python3 -m unittest`
 
 ## Challenge 
 
