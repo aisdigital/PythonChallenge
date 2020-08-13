@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/akafael/PythonChallenge.svg?branch=feature/rafael_lima)](https://travis-ci.org/akafael/PythonChallenge)
+
 # Python Challenge
 
 AIS Python Challenge
