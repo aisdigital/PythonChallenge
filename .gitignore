@@ -703,3 +703,6 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,cmake,xcode,windows,visualstudio,python,pycharm,visualstudiocode
+Scripts/
+
+pyvenv.cfg
