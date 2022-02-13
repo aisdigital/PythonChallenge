@@ -61,3 +61,22 @@ Example:
 * All the code except for the `main.py` should be on the `src` directory.
 
 Happy Coding!
+
+## Instructions
+
+1. Create python venv
+```
+python3 -m venv .
+```
+2. Activate venv (Windows)
+```
+cd Scripts && activate.bat && cd ..
+```
+3. Install requirements via requirements.txt
+```
+pip install requirements.txt 
+```
+4. Run tests
+```
+pytest ./tests -rAs
+```
