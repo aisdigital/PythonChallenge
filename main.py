@@ -1,5 +1,13 @@
 import sys
 import tests as t
+import src as s
+
+# def app(argv):
+#     data = s.read_data()
+
+#     arg_list = s.parse_arg(argv)
+
+
 
 def main(argv):
 # To run an unity test, comment the call for app(argv) and uncomment the call for the desired
@@ -9,7 +17,7 @@ def main(argv):
     # t.test_read_data(argv) # To test read_data function
     # t.test_search_schooldesc(argv) # To test search by SCHOOLDESC functionality
     # t.test_search_parid(argv) # To test search by PARID functionality
-    # t.test_export_results(argv) # To test export results (to TXT) functionality
+    t.test_export_results(argv) # To test export results (to TXT) functionality
 
 if __name__ == '__main__':
     main(sys.argv[1:])

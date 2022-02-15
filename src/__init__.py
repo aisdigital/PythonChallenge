@@ -28,11 +28,7 @@ POS_MAX = 24 # Number of columns
 # application will be executed through main.py under the project root directory. 
 CSV_PATH = os.getcwd() + "/input/property_sales_transactions.csv"
 
-# Path of the TXT output file.
-# P. S.: This path should be absolute ou passed as a parameter to export_results. Here it is assumed that
-#  this application will be executed through main.py under the project root directory.
-EXP_PATH = os.getcwd() + "/output/"
-
+# to-do: implement a more intelligent, flexible parsing funcion
 def parse_arg(arg):
     argum = {}
     # If the correct number of arguments was entered
@@ -117,21 +113,25 @@ def search_method(srch_method, data, keyword):
 
     return results
 
-def export_results(res):
+def export_results(res, exp_path):
     # Get the timestamp
     # to-do: configure the time zone
     date = datetime.now()
 
-    file_name = EXP_PATH + "results-" + date.strftime('%Y-%m-%dT%H-%M-%S.%f%z') + ".txt"
+    file_name = exp_path + "results-" + date.strftime('%Y-%m-%dT%H-%M-%S.%f%z') + ".txt"
 
-    file_exp = open(file_name, 'w', newline='', encoding='utf-8')
+    try:
+        file_exp = open(file_name, 'w', newline='', encoding='utf-8')
+        file_exp_writer = csv.writer(file_exp, delimiter=',')
 
-    file_exp_writer = csv.writer(file_exp, delimiter=',')
+        for i in range(0, len(res)):
+            file_exp_writer.writerow(res[i])
 
-    for i in range(0, len(res)):
-        file_exp_writer.writerow(res[i])
+        file_exp.close()
 
-    file_exp.close()
+    except:
+        print("\nInvalid path!\n")
+
 
 # FER: this function is more complex than I thought. I'll do it later.
 # def print_sales_sum(res_entry):
