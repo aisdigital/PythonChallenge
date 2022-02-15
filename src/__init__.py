@@ -77,12 +77,24 @@ def read_data():
 
     return data_in
 
-def search_schooldesc(data, keyword):
+def search_method(srch_method, data, keyword):
     
     results = []
 
+    if srch_method == SRCH_PARID:
+        pos_meth = POS_PARID
+    elif srch_method == SRCH_SCHOOLDESC:
+        pos_meth = POS_SCHOOLDESC
+    else:
+        return []
+    
+    # Make the search case insensitive
+    l_keyword = keyword.casefold()
+
     for i in range(1, len(data)):
-        if data[i][POS_SCHOOLDESC].find(keyword) != -1:
+        # Make the search case insensitive
+        tmp_data = data[i][pos_meth].casefold()
+        if tmp_data.find(l_keyword) != -1:
             results.append(data[i])
     
     return results

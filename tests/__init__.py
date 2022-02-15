@@ -20,12 +20,24 @@ def test_search_schooldesc(argv):
 
     data = src.read_data()
 
-    results = src.search_schooldesc(data, "South")
+    results = src.search_method(src.SRCH_SCHOOLDESC, data, "SOUTH")
 
-    # Print only 10 results for testing because they are always numerous
-    for i in range(0, 10):
-        print("PAIRID: {}, SCHOOLDESC: {}". format(results[i][src.POS_PARID], \
-                                                   results[i][src.POS_SCHOOLDESC]))
+    if len(results) >= 10:
+        # Print only 10 results for testing because they are always numerous
+        for i in range(0, 10):
+            print("PAIRID: {}, SCHOOLDESC: {}". format(results[i][src.POS_PARID], \
+                                                    results[i][src.POS_SCHOOLDESC]))
+
+def test_search_parid(argv):
+
+    data = src.read_data()
+
+    results = src.search_method(src.SRCH_PARID, data, "0568E00072000000")
+
+    if len(results) > 0:
+        print("PAIRID: {}, SCHOOLDESC: {}". format(results[0][src.POS_PARID], \
+                                                    results[0][src.POS_SCHOOLDESC]))
+
 
 
 
