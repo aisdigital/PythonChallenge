@@ -3,8 +3,9 @@ import os
 # General flags
 NO_ARG = 0
 N_OUT = 1
-Y_OUT = 2
-M_OUT = 3
+Y_TXT = 2
+M_TXT = 3
+Y_SALES = 4
 SRCH_SCHOOLDESC = 3
 SRCH_PARID = 4
 
@@ -39,19 +40,22 @@ def parse_arg(arg):
             argum["srch_type_code"] = NO_ARG
             return argum
 
-        # If a option to save the results may have been chosen
+        # If a option to save the results or to show then as a JSON may have been chosen
         if len(arg) > 2:
             # If the 'output' option was typed
             if (arg[POS_ARG_OUT] == "-o") or (arg[POS_ARG_OUT] == "--output"):
                 # if the path may have been provided
                 if len(arg) > 3:
                     argum["srch_out_path"] = arg[POS_ARG_PATH] # to-do: check for forbidden characters
-                    argum["out"] = Y_OUT
+                    argum["out"] = Y_TXT
                 # Otherwise (len(arg) == 3) we report an error and tell the function caller
                 # that the output path is missing
                 else:
                     argum["srch_type_code"] = NO_ARG # This error turns the whole command invalid
-                    argum["out"] = M_OUT # This flag tells the caller that the path is missing
+                    argum["out"] = M_TXT # This flag tells the caller that the path is missing
+            # if the --sale-summary option was chose (in this case, len(arg) must be equal to 3)
+            elif (arg[POS_ARG_OUT] == "--sale-summary") and (len(arg) == 3):
+                argum["out"] = Y_SALES
             # Otherwise the command is invalid
             else:
                 argum["srch_type_code"] = NO_ARG
