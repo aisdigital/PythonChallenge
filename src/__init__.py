@@ -1,5 +1,6 @@
 import os
 import csv
+import json
 from datetime import datetime
 
 # General flags
@@ -20,6 +21,7 @@ POS_ARG_PATH = 3
 # Index of each column in the data created from the CSV file
 POS_PARID = 0
 POS_SCHOOLDESC = 12
+POS_MAX = 24 # Number of columns
 
 # Path of the CSV file.
 # P. S.: This path should be absolute ou passed as a parameter to read_data. Here it is assumed that this
@@ -117,6 +119,7 @@ def search_method(srch_method, data, keyword):
 
 def export_results(res):
     # Get the timestamp
+    # to-do: configure the time zone
     date = datetime.now()
 
     file_name = EXP_PATH + "results-" + date.strftime('%Y-%m-%dT%H-%M-%S.%f%z') + ".txt"
@@ -129,3 +132,11 @@ def export_results(res):
         file_exp_writer.writerow(res[i])
 
     file_exp.close()
+
+# FER: this function is more complex than I thought. I'll do it later.
+# def print_sales_sum(res_entry):
+
+
+#     # Creating a dictionary to print in JSON format
+#     entry_dic = {'PARID':res_entry[POS_PARID], 'SCHOOLDESC':res_entry[POS_PARID] \
+#                  'VALID SALE': }

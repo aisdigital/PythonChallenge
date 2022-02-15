@@ -50,8 +50,3 @@ def test_export_results(argv):
     #results = src.search_method(src.SRCH_SCHOOLDESC, data, "Duquesne")
 
     src.export_results(results)
-
-
-
-
-    
