@@ -14,6 +14,10 @@ POS_ARG_KEY = 1
 POS_ARG_OUT = 2
 POS_ARG_PATH = 3
 
+# Index of each column in the data created from the CSV file
+POS_PARID = 0
+POS_SCHOOLDESC = 12
+
 # Path of the CSV file.
 # P. S.: This path should be absolute ou passed as a parameter to read_data. Here it is assumed that this
 # application will be executed through main.py
@@ -72,3 +76,13 @@ def read_data():
     file_csv.close()
 
     return data_in
+
+def search_schooldesc(data, keyword):
+    
+    results = []
+
+    for i in range(1, len(data)):
+        if data[i][POS_SCHOOLDESC].find(keyword) != -1:
+            results.append(data[i])
+    
+    return results
