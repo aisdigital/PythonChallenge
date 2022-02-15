@@ -1,4 +1,6 @@
 import os
+import csv
+from datetime import datetime
 
 # General flags
 NO_ARG = 0
@@ -21,8 +23,13 @@ POS_SCHOOLDESC = 12
 
 # Path of the CSV file.
 # P. S.: This path should be absolute ou passed as a parameter to read_data. Here it is assumed that this
-# application will be executed through main.py
-CSV_PATH = os.getcwd() + "\input\property_sales_transactions.csv"
+# application will be executed through main.py under the project root directory. 
+CSV_PATH = os.getcwd() + "/input/property_sales_transactions.csv"
+
+# Path of the TXT output file.
+# P. S.: This path should be absolute ou passed as a parameter to export_results. Here it is assumed that
+#  this application will be executed through main.py under the project root directory.
+EXP_PATH = os.getcwd() + "/output/"
 
 def parse_arg(arg):
     argum = {}
@@ -69,6 +76,7 @@ def parse_arg(arg):
     return argum
 
 def read_data():
+    # P.S.: We could have used Python's CSV module
     file_csv = open(CSV_PATH, 'r')
 
     data_in = []
@@ -101,4 +109,23 @@ def search_method(srch_method, data, keyword):
         if tmp_data.find(l_keyword) != -1:
             results.append(data[i])
     
+    # Add the columns names
+    if(len(results) > 0):
+        results = [data[0]] + results
+
     return results
+
+def export_results(res):
+    # Get the timestamp
+    date = datetime.now()
+
+    file_name = EXP_PATH + "results-" + date.strftime('%Y-%m-%dT%H-%M-%S.%f%z') + ".txt"
+
+    file_exp = open(file_name, 'w', newline='', encoding='utf-8')
+
+    file_exp_writer = csv.writer(file_exp, delimiter=',')
+
+    for i in range(0, len(res)):
+        file_exp_writer.writerow(res[i])
+
+    file_exp.close()
