@@ -47,6 +47,10 @@ def test_export_results(argv):
 
     results = src.search_method(src.SRCH_PARID, data, "0543M00117000000")
 
-    #results = src.search_method(src.SRCH_SCHOOLDESC, data, "Duquesne")
+    # results = src.search_method(src.SRCH_SCHOOLDESC, data, "Duquesne")
 
-    src.export_results(results, argv[src.POS_ARG_PATH])
+    # Be sure that path is available in argv
+    if len(argv) > 3:
+        src.export_results(results, argv[src.POS_ARG_PATH])
+    else:
+        print("\nEnter the path.\n")

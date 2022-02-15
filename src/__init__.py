@@ -118,6 +118,7 @@ def export_results(res, exp_path):
     # to-do: configure the time zone
     date = datetime.now()
 
+    # to-do: check exp_path for cases that the try/except block cannot catch.
     file_name = exp_path + "results-" + date.strftime('%Y-%m-%dT%H-%M-%S.%f%z') + ".txt"
 
     try:
